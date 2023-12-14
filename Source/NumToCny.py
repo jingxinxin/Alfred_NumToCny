@@ -1,12 +1,12 @@
 #encoding: utf-8
 '''
-中文互联网上迄今为止实现最正确、代码最漂亮且效率最高的大写人民币金额转换代码
-作者：李维 <oldrev@gmail.com>
-版权所有 (c) 2013 李维。保留所有权利。
+中文互联网上迄今为止实现最正确、代码最漂亮且效率最高的大写人民币金额转换代码 for python3
+作者：Jacks Jiang <191100479@qq.com>
+版权所有 (c) 2023 Jacks。保留所有权利。
 本代码基于 BSD License 授权。
 '''
 
-from cStringIO import StringIO
+from io import StringIO
 from decimal import Decimal
 import math
 
@@ -17,12 +17,11 @@ def to_rmb_upper(price):
     price = Decimal(price)
     price = Decimal('{:.2f}'.format(price))
     integer_part = int(price)
-    wanyi_part = integer_part / 1000000000000
-    yi_part = integer_part % 1000000000000 / 100000000
-    wan_part = integer_part % 100000000 / 10000
+    wanyi_part = integer_part // 1000000000000
+    yi_part = integer_part % 1000000000000 // 100000000
+    wan_part = integer_part % 100000000 // 10000
     qian_part = integer_part % 10000
     dec_part = int(price * 100 % 100)
-
 
     strio = StringIO()
 
@@ -71,7 +70,7 @@ def _parse_integer(strio, value, zero_count = 0, is_first_section = False):
     ndigits = int(math.floor(math.log10(value))) + 1
     if value < 1000 and not is_first_section:
         zero_count += 1
-    for i in xrange(0, ndigits):
+    for i in range(0, ndigits):
         factor = int(pow(10, ndigits - 1 - i))
         digit = int(value / factor)
         if digit != 0:
@@ -82,12 +81,12 @@ def _parse_integer(strio, value, zero_count = 0, is_first_section = False):
             zero_count = 0
         else:
             zero_count += 1
-        value -= value / factor * factor
+        value -= value // factor * factor
     return zero_count
 
 def _parse_decimal(strio, integer_part, value, zero_count):
     assert value > 0 and value <= 99
-    jiao = value / 10
+    jiao = value // 10
     fen = value % 10
     if zero_count > 0 and (jiao > 0 or fen > 0) and integer_part > 0:
         strio.write('零')

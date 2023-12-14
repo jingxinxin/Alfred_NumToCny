@@ -124,8 +124,8 @@ print(json.dumps(parse(ret)))</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>1.5</string>
+	<string>2.0</string>
 	<key>webaddress</key>
-	<string>https://github.com/yourtion/Alfred_NumToCny</string>
+	<string>https://github.com/jingxinxin/Alfred_NumToCny</string>
 </dict>
 </plist>
